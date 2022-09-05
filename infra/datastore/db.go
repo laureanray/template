@@ -11,11 +11,11 @@ import (
 
 func NewDB() *gorm.DB {
 	config, _ := config.GetConfig()
-	dsn := fmt.Sprintf("host=%s port=&d user=%s password=%s dbname=%s sslmode=%b",
+	dsn := fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=%t",
 		config.Host, config.Port, config.User, config.DBPassword, config.DBName, config.SSLMode)
-	db, err := gorm.Open(postgres.Config{
+	db, err := gorm.Open(postgres.New(postgres.Config{
 		DSN: dsn,
-	}, &gorm.Config{})
+	}), &gorm.Config{})
 
 	if err != nil {
 		log.Fatalln(err)
